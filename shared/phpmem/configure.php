@@ -33,8 +33,7 @@ if (!isset($php_user) || !is_string($php_user)|| !isset($php_pw)) {
 $php_shadow=file_get_contents('/etc/shadow');
 preg_match('/admin:([^:]+)/',$php_shadow,$php_admin);
 $php_admin = $php_admin[1];
-$php_salt = substr($php_admin,0,strrpos($php_admin,"$")+1);
-if ($php_admin!==crypt($php_pw, $php_salt)) {
+if ($php_admin!==crypt($php_pw, $php_admin)) {
     header('WWW-Authenticate: Basic realm="phpmem"');
     header('HTTP/1.0 401 Unauthorized');
     exit;

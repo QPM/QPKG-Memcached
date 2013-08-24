@@ -9,17 +9,17 @@ BIN_PATH=/bin
 case "$1" in
   start)
     chmod -R 755 $QPKG_DIR/bin
-    chmod -R 755 $QPKG_DIR/phpmem
+    chmod -R 655 $QPKG_DIR/phpmem
 
-    LD_LIBRARY_PATH=$QPKG_DIR/bin /usr/sbin/screen -dmS 'Memcached' $QPKG_DIR/bin/memcached -u admin
+    LD_LIBRARY_PATH=$QPKG_DIR/bin /usr/sbin/screen -dmS 'Memcached' $QPKG_DIR/bin/memcached -u admin -l 127.0.0.1
 
-    cp -rf $QPKG_DIR/phpmem $WEB_PATH/phpmem
+    cp -rf $QPKG_DIR/phpmem $WEB_PATH/phpmemcacheadmin
 
     : ADD START ACTIONS HERE
     ;;
 
   stop)
-    rm -rf $WEB_PATH/phpmem
+    rm -rf $WEB_PATH/phpmemcacheadmin
 
     kill `ps|grep 'Memcached'|grep 'grep' -v|awk '{print$1}'`
 
